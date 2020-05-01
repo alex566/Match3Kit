@@ -49,10 +49,10 @@ public struct Pattern: Equatable, Hashable {
 
         for i in columns {
             for j in rows {
-                let figureIndices = Set(indices.map { Index(column: $0.column + i,
-                                                            row: $0.row + j) })
-                if figureIndices.isSubset(of: containedIn) {
-                    return figureIndices
+                let figureIndices = indices.lazy.map { Index(column: $0.column + i,
+                                                             row: $0.row + j) }
+                if containedIn.isSuperset(of: figureIndices) {
+                    return Set(figureIndices)
                 }
             }
         }
