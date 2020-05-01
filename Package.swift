@@ -1,16 +1,11 @@
+// swift-tools-version:5.2
 import PackageDescription
 
 let package = Package(
     name: "Match3Kit",
-    dependencies: [],
     targets: [
-        .target(
-            name: "Match3Kit",
-            dependencies: []
-        ),
-        .testTarget(
-            name: "Match3KitTests",
-            dependencies: []
-        ),
-    ]
+        .target(name: "Match3Kit"),
+        .testTarget(name: "Match3KitTests"),
+    ],
+    swiftLanguageVersions: [.v5]
 )
