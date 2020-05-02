@@ -3,6 +3,8 @@
 Library for simple Match3 games.
 It can work with a solid grid of figures and spill them only in columns.
 
+[![Match-3 Game concept](http://img.youtube.com/vi/wFZeZ6kXWgw/0.jpg)](http://www.youtube.com/watch?v=wFZeZ6kXWgw "Match-3 Game concept")
+
 ## Example
 Create the enum for all kinds of figures:
 ```Swift
