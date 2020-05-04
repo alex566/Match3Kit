@@ -46,7 +46,7 @@ func swap(source: Index, target: Index) {
         swapUI(source, target)
         if controller.shouldSwapCell(at: source, with: target) {
             let indices = controller.swapAndMatchCell(at: source, with: target)
-            let match = controller.match(indices: indices, swapIndices: [source, target])
+            let match = controller.match(indices: indices, swapIndices: [source, target], refill: .spill)
             remove(indices)
             spawn(match.spawned)
             spill(match.removed)
@@ -56,3 +56,7 @@ func swap(source: Index, target: Index) {
     } 
 }
 ```
+
+## TODO:
+- Add more examples with bonuses
+- Add a demo project

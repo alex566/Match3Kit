@@ -66,6 +66,10 @@ public final class Controller<Filling: GridFilling> {
     public let basic: [Filling]
     public let bonuse: [Filling]
 
+    public enum Refill {
+        case spill, regenerate
+    }
+
     private(set) public var grid: Grid<Filling>
 
     private let generator: Generator<Filling>
@@ -105,8 +109,8 @@ public final class Controller<Filling: GridFilling> {
         return cell
     }
 
-    public func removeAndRefill(indices: Set<Index>) {
-        let removedIndices = grid.remove(cells: indices)
+    public func remove(indices: Set<Index>, refill: Refill) {
+        let removedIndices = refill == .spill ? grid.remove(cells: indices) : indices
         grid = generator.fill(grid: grid, indices: removedIndices)
     }
 
@@ -145,7 +149,7 @@ public final class Controller<Filling: GridFilling> {
             .union(matcher.findMatches(on: grid, at: target))
     }
 
-    public func match(indices: Set<Index>, swapIndices: Set<Index>) -> MatchResult<Filling> {
+    public func match(indices: Set<Index>, swapIndices: Set<Index>, refill: Refill) -> MatchResult<Filling> {
         var spawnCells = [Index: Grid<Filling>.Cell]()
         var removeIndices = indices
         for bonuse in bonuse {
@@ -159,7 +163,7 @@ public final class Controller<Filling: GridFilling> {
                 removeIndices.remove(spawnIndex)
             }
         }
-        removeAndRefill(indices: removeIndices)
+        remove(indices: removeIndices, refill: refill)
 
         return MatchResult(removed: removeIndices,
                            spawned: spawnCells)
