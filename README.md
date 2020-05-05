@@ -8,8 +8,8 @@ It can work with a solid grid of figures and spill them only in columns.
 ## Example
 Create the enum for all kinds of figures:
 ```Swift
-typealias MyGrid = Grid<Figure>
-typealias MyController = Controller<Figure>
+typealias MyGrid = Grid<Shape>
+typealias MyController = Controller<Shape>
 
 enum Shapes: String, GridFilling {
     case square
@@ -27,8 +27,8 @@ Create a grid controller with configurations:
 let controller = MyController(size: Size(columns: 6, rows: 6),
                               basic: [.square, .circle, .triangle],
                               bonuse: [],
-                              generatorType: Generator<Toys>.self,
-                              matcherType: Matcher<Toys>.self)
+                              generatorType: Generator<Shape>.self,
+                              matcherType: Matcher<Shape>.self)
 ```
 
 Create UI based on the grid that the controller generated:

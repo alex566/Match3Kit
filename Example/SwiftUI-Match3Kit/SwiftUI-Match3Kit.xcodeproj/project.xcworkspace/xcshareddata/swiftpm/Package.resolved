@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Match3Kit",
+        "repositoryURL": "https://github.com/alex566/Match3Kit",
+        "state": {
+          "branch": null,
+          "revision": "6f3ae3e6610b85c97ec8cb6a7bfd300a844ffd13",
+          "version": "0.2.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
