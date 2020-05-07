@@ -24,11 +24,13 @@ enum Shapes: String, GridFilling {
 
 Create a grid controller with configurations:
 ```Swift
-let controller = MyController(size: Size(columns: 6, rows: 6),
-                              basic: [.square, .circle, .triangle],
-                              bonuse: [],
-                              generatorType: Generator<Shape>.self,
-                              matcherType: Matcher<Shape>.self)
+let controller = MyController(
+    size: Size(columns: 6, rows: 6),
+    basic: [.square, .circle, .triangle],
+    bonuse: [],
+    generatorType: Generator<Shape>.self,
+    matcherType: Matcher<Shape>.self
+)
 ```
 
 Create UI based on the grid that the controller generated:

@@ -75,19 +75,19 @@ public final class Controller<Filling: GridFilling> {
     private let generator: Generator<Filling>
     private let matcher: Matcher<Filling>
 
-    public init<GeneratorType: Generator<Filling>, MatcherType: Matcher<Filling>>(size: Size,
+    public init(size: Size,
                 basic: [Filling],
                 bonuse: [Filling],
-                generatorType: GeneratorType.Type,
-                matcherType: MatcherType.Type) {
+                generatorType: Generator<Filling>.Type,
+                matcherType: Matcher<Filling>.Type) {
         precondition(size.columns >= 3)
         precondition(size.rows >= 3)
 
         self.basic = basic
         self.bonuse = bonuse
 
-        self.generator = GeneratorType(fillings: basic)
-        self.matcher = MatcherType(fillings: basic, minSeries: 3)
+        self.generator = generatorType.init(fillings: basic)
+        self.matcher = matcherType.init(fillings: basic, minSeries: 3)
         self.grid = generator.generate(of: size)
     }
 
