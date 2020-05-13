@@ -143,6 +143,10 @@ public final class Controller<Filling: GridFilling> {
         matcher.findAllMatches(on: grid)
     }
 
+    public func findMatches(indices: Set<Index>) -> Set<Index> {
+        matcher.findMatched(on: grid, indices: indices)
+    }
+
     public func swapAndMatchCell( at index: Index, with target: Index) -> Set<Index> {
         grid.swapCell(at: index, with: target)
         return matcher.findMatches(on: grid, at: index)

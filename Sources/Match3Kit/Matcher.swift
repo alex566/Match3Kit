@@ -18,7 +18,11 @@ open class Matcher<Filling: GridFilling> {
     }
 
     public func findAllMatches(on grid: Grid<Filling>) -> Set<Index> {
-        return grid.allIndices().reduce(Set()) { result, index in
+        findMatched(on: grid, indices: grid.allIndices())
+    }
+
+    public func findMatched(on grid: Grid<Filling>, indices: Set<Index>) -> Set<Index> {
+        indices.reduce(Set()) { result, index in
             result.union(findMatches(on: grid, at: index))
         }
     }

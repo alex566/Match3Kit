@@ -8,7 +8,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "Match3Kit"),
-        .testTarget(name: "Match3KitTests"),
+        .testTarget(name: "Match3KitTests", dependencies: ["Match3Kit"])
     ],
     swiftLanguageVersions: [.v5]
 )
