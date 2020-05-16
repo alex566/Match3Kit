@@ -72,8 +72,8 @@ public final class Controller<Filling: GridFilling> {
 
     private(set) public var grid: Grid<Filling>
 
-    let generator: Generator<Filling>
-    let matcher: Matcher<Filling>
+    public let generator: Generator<Filling>
+    public let matcher: Matcher<Filling>
 
     public init(size: Size,
                 basic: [Filling],
