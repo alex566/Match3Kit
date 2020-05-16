@@ -61,7 +61,7 @@ public struct Pattern: Equatable, Hashable {
 }
 
 /// Grid modifier
-public final class Controller<Filling: GridFilling> {
+public final class Controller<Filling: GridFilling, GeneratorType: Generator<Filling>, MatcherType: Matcher<Filling>> {
 
     public let basic: [Filling]
     public let bonuse: [Filling]
@@ -72,22 +72,20 @@ public final class Controller<Filling: GridFilling> {
 
     private(set) public var grid: Grid<Filling>
 
-    public let generator: Generator<Filling>
-    public let matcher: Matcher<Filling>
+    public let generator: GeneratorType
+    public let matcher: MatcherType
 
     public init(size: Size,
                 basic: [Filling],
-                bonuse: [Filling],
-                generatorType: Generator<Filling>.Type,
-                matcherType: Matcher<Filling>.Type) {
+                bonuse: [Filling]) {
         precondition(size.columns >= 3)
         precondition(size.rows >= 3)
 
         self.basic = basic
         self.bonuse = bonuse
 
-        self.generator = generatorType.init(fillings: basic)
-        self.matcher = matcherType.init(fillings: basic, minSeries: 3)
+        self.generator = GeneratorType(fillings: basic)
+        self.matcher = MatcherType(fillings: basic, minSeries: 3)
         self.grid = generator.generate(of: size)
     }
 
