@@ -63,8 +63,9 @@ public struct Pattern: Equatable, Hashable {
 /// Grid modifier
 public final class Controller<Filling: GridFilling, GeneratorType: Generator<Filling>, MatcherType: Matcher<Filling>> {
 
-    public let basic: [Filling]
-    public let bonuse: [Filling]
+    public let basic: Set<Filling>
+    public let bonuse: Set<Filling>
+    public let obstacles: Set<Filling>
 
     public enum Refill {
         case spill, regenerate
@@ -76,13 +77,15 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
     public let matcher: MatcherType
 
     public init(size: Size,
-                basic: [Filling],
-                bonuse: [Filling]) {
+                basic: Set<Filling>,
+                bonuse: Set<Filling>,
+                obstacles: Set<Filling>) {
         precondition(size.columns >= 3)
         precondition(size.rows >= 3)
 
         self.basic = basic
         self.bonuse = bonuse
+        self.obstacles = obstacles
 
         self.generator = GeneratorType(fillings: basic)
         self.matcher = MatcherType(fillings: basic, minSeries: 3)
@@ -122,7 +125,10 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
 
     @inlinable
     public func canSwapCell(at index: Index, with target: Index) -> Bool {
-        index.isNeighboring(with: target)
+        let cell = grid.cell(at: index)
+        let targetCell = grid.cell(at: target)
+        return index.isNeighboring(with: target) &&
+            !obstacles.contains(cell.filling) && !obstacles.contains(targetCell.filling)
     }
 
     public func swapCell(at index: Index, with target: Index) {

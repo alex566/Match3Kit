@@ -9,10 +9,10 @@
 /// Matches detector
 open class Matcher<Filling: GridFilling> {
 
-    public let fillings: [Filling]
+    public let fillings: Set<Filling>
     public let minSeries: Int
 
-    public required init(fillings: [Filling], minSeries: Int) {
+    public required init(fillings: Set<Filling>, minSeries: Int) {
         self.minSeries = minSeries
         self.fillings = fillings
     }

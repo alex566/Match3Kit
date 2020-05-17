@@ -8,11 +8,11 @@
 
 open class Generator<Filling: GridFilling> {
 
-    public final let fillings: [Filling]
+    public final let fillings: Set<Filling>
     
     private var nextIndex = 0
 
-    public required init(fillings: [Filling]) {
+    public required init(fillings: Set<Filling>) {
         precondition(fillings.count > 1)
         self.fillings = fillings
     }
