@@ -92,6 +92,22 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
         self.grid = generator.generate(of: size)
     }
 
+    public init(grid: Grid<Filling>,
+                basic: Set<Filling>,
+                bonuse: Set<Filling>,
+                obstacles: Set<Filling>) {
+        precondition(grid.size.columns >= 3)
+        precondition(grid.size.rows >= 3)
+
+        self.basic = basic
+        self.bonuse = bonuse
+        self.obstacles = obstacles
+
+        self.generator = GeneratorType(fillings: basic)
+        self.matcher = MatcherType(fillings: basic, minSeries: 3)
+        self.grid = grid
+    }
+
     @inlinable
     public func isBonuse(at index: Index) -> Bool {
         let cell = grid.cell(at: index)
@@ -113,10 +129,6 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
     public func remove(indices: Set<Index>, refill: Refill) {
         let removedIndices = refill == .spill ? grid.remove(cells: indices) : indices
         grid = generator.fill(grid: grid, indices: removedIndices)
-    }
-
-    public func reload(grid: Grid<Filling>) {
-        self.grid = grid
     }
 
     public func addBasic(_ fillings: Set<Filling>) {
