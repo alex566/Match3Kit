@@ -63,7 +63,7 @@ public struct Pattern: Equatable, Hashable {
 /// Grid modifier
 public final class Controller<Filling: GridFilling, GeneratorType: Generator<Filling>, MatcherType: Matcher<Filling>> {
 
-    public let basic: Set<Filling>
+    public private(set) var basic: Set<Filling>
     public let bonuse: Set<Filling>
     public let obstacles: Set<Filling>
 
@@ -113,6 +113,21 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
     public func remove(indices: Set<Index>, refill: Refill) {
         let removedIndices = refill == .spill ? grid.remove(cells: indices) : indices
         grid = generator.fill(grid: grid, indices: removedIndices)
+    }
+
+    public func reload(grid: Grid<Filling>) {
+        self.grid = grid
+    }
+
+    public func addBasic(_ fillings: Set<Filling>) {
+        basic.formUnion(fillings)
+        generator.addFillings(fillings)
+        matcher.addFillings(fillings)
+    }
+    public func removeBasic(_ fillings: Set<Filling>) {
+        basic.subtract(fillings)
+        generator.removeFillings(fillings)
+        matcher.removeFillings(fillings)
     }
 
     // MARK: - Swap

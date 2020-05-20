@@ -8,9 +8,18 @@
 
 open class Generator<Filling: GridFilling> {
 
-    public final let fillings: Set<Filling>
+    public private(set) final var fillings: Set<Filling>
     
     private var nextIndex = 0
+
+    internal final func addFillings(_ fillings: Set<Filling>) {
+        self.fillings.formUnion(fillings)
+    }
+
+    internal final func removeFillings(_ fillings: Set<Filling>) {
+        self.fillings.subtract(fillings)
+        precondition(self.fillings.count > 1)
+    }
 
     public required init(fillings: Set<Filling>) {
         precondition(fillings.count > 1)

@@ -9,8 +9,16 @@
 /// Matches detector
 open class Matcher<Filling: GridFilling> {
 
-    public let fillings: Set<Filling>
+    public private(set) var fillings: Set<Filling>
     public let minSeries: Int
+
+    internal final func addFillings(_ fillings: Set<Filling>) {
+        self.fillings.formUnion(fillings)
+    }
+
+    internal final func removeFillings(_ fillings: Set<Filling>) {
+        self.fillings.subtract(fillings)
+    }
 
     public required init(fillings: Set<Filling>, minSeries: Int) {
         self.minSeries = minSeries
