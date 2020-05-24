@@ -3,7 +3,7 @@
 Library for simple Match3 games.
 It can work with a solid grid of figures and spill them only in columns.
 
-[![Match-3 Game concept](http://img.youtube.com/vi/wFZeZ6kXWgw/0.jpg)](http://www.youtube.com/watch?v=wFZeZ6kXWgw "Match-3 Game concept")
+![Forest walk](./Images/forest-walk.gif)
 
 ## Example
 Create the enum for all kinds of figures:
@@ -62,3 +62,8 @@ func swap(source: Index, target: Index) {
 ## TODO:
 - Add more examples with bonuses
 - Add a demo project
+
+## Used in:
+# Forest walk
+[![Forest walk](./Images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/app/apple-store/id1513811419?pt=120889283&ct=match3kit&mt=8 "Forest walk")
+
