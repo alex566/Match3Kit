@@ -6,11 +6,11 @@
 //  Copyright © 2020 Alexey. All rights reserved.
 //
 
+import Foundation
+
 open class Generator<Filling: GridFilling> {
 
     public private(set) final var fillings: Set<Filling>
-    
-    private var nextIndex = 0
 
     internal final func addFillings(_ fillings: Set<Filling>) {
         self.fillings.formUnion(fillings)
@@ -38,8 +38,7 @@ open class Generator<Filling: GridFilling> {
 
     open func generate(at index: Index, filling: Filling? = nil) -> Grid<Filling>.Cell {
         let filling = filling ?? fillings.randomElement()!
-        let cell = Grid<Filling>.Cell(id: nextIndex, filling: filling)
-        nextIndex += 1
+        let cell = Grid<Filling>.Cell(id: UUID(), filling: filling)
         return cell
     }
 

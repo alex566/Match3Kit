@@ -6,6 +6,8 @@
 //  Copyright © 2019 Alexey. All rights reserved.
 //
 
+import Foundation
+
 public struct Size: Hashable, Codable {
     public let columns: Int
     public let rows: Int
@@ -119,21 +121,13 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
     public private(set) var columns: [[Cell]]
 
     public struct Cell: Hashable, Codable, Identifiable {
-        public var id: Int
+        public var id: UUID
         public let filling: Filling
 
-        public init(id: Int,
+        public init(id: UUID,
                     filling: Filling) {
             self.id = id
             self.filling = filling
-        }
-
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
-
-        public static func == (lhs: Cell, rhs: Cell) -> Bool {
-            lhs.id == rhs.id && lhs.filling == rhs.filling
         }
 
         public func match(with cell: Cell) -> Bool {
