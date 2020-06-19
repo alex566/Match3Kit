@@ -38,7 +38,7 @@ struct GridCellView: View {
 struct GridCellView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(Shape.allCases, id: \.self) { shape in
-            GridCellView(cell: Grid<Shape>.Cell(id: .random(in: 0..<10000),
+            GridCellView(cell: Grid<Shape>.Cell(id: UUID(),
                                                 filling: shape))
         }
     }

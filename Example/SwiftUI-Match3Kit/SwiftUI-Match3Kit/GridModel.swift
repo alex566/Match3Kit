@@ -21,11 +21,12 @@ enum Shape: String, CaseIterable, GridFilling {
 
 final class GridModel: ObservableObject {
 
-    private let controller = Controller<Shape>(size: Size(columns: 6, rows: 6),
-                                               basic: [.square, .circle, .triangle],
-                                               bonuse: [],
-                                               generatorType: Generator<Shape>.self,
-                                               matcherType: Matcher<Shape>.self)
+    typealias GridController = Controller<Shape, Generator<Shape>, Matcher<Shape>>
+
+    private let controller = GridController(size: Size(columns: 6, rows: 6),
+                                            basic: [.square, .circle, .triangle],
+                                            bonuse: [],
+                                            obstacles: [])
 
     var grid: Grid<Shape> {
         controller.grid
