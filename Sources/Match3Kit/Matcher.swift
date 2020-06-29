@@ -49,9 +49,9 @@ open class Matcher<Filling: GridFilling> {
         }
 
         let verticalIndicies = matchCellsInRow(sequence: index.upperSequence()) +
-            matchCellsInRow(sequence: index.lowerSequence())
+            matchCellsInRow(sequence: index.lowerSequence()) + [index]
         let horizontalIndicies = matchCellsInRow(sequence: index.rightSequence()) +
-            matchCellsInRow(sequence: index.leftSequence())
+            matchCellsInRow(sequence: index.leftSequence()) + [index]
 
         var result = Set<Index>()
         if verticalIndicies.count >= minSeries {
@@ -59,9 +59,6 @@ open class Matcher<Filling: GridFilling> {
         }
         if horizontalIndicies.count >= minSeries {
             result.formUnion(horizontalIndicies)
-        }
-        if !result.isEmpty {
-            result.insert(index)
         }
         return result
     }
