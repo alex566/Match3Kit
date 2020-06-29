@@ -45,6 +45,11 @@ public struct Index: Hashable, Codable, CustomStringConvertible {
         self.row = row
     }
 
+    @inlinable
+    public var zero: Index {
+        Index(column: 0, row: 0)
+    }
+
     // MARK: - Neighbors
     @inlinable
     public var upper: Index {
@@ -140,18 +145,18 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
         self.columns = columns
     }
 
-    public func allIndices() -> Set<Index> {
-        var result = Set<Index>()
+    public func allIndices() -> [Index] {
+        var result = [Index]()
         for column in columns.indices {
             for row in columns[column].indices {
-                result.insert(Index(column: column, row: row))
+                result.append(Index(column: column, row: row))
             }
         }
         return result
     }
 
     @inlinable
-    public func allIndices(of filling: Filling) -> Set<Index> {
+    public func allIndices(of filling: Filling) -> [Index] {
         allIndices().filter { cell(at: $0).filling == filling }
     }
 

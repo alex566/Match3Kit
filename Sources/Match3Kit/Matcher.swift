@@ -29,7 +29,8 @@ open class Matcher<Filling: GridFilling> {
         findMatched(on: grid, indices: grid.allIndices())
     }
 
-    public func findMatched(on grid: Grid<Filling>, indices: Set<Index>) -> Set<Index> {
+    public func findMatched<Indices: Collection>(on grid: Grid<Filling>,
+                                                 indices: Indices) -> Set<Index> where Indices.Element == Index {
         indices.reduce(Set()) { result, index in
             result.union(findMatches(on: grid, at: index))
         }
@@ -48,9 +49,9 @@ open class Matcher<Filling: GridFilling> {
         }
 
         let verticalIndicies = matchCellsInRow(sequence: index.upperSequence()) +
-            matchCellsInRow(sequence: index.lowerSequence()) + [index]
+            matchCellsInRow(sequence: index.lowerSequence())
         let horizontalIndicies = matchCellsInRow(sequence: index.rightSequence()) +
-            matchCellsInRow(sequence: index.leftSequence()) + [index]
+            matchCellsInRow(sequence: index.leftSequence())
 
         var result = Set<Index>()
         if verticalIndicies.count >= minSeries {
@@ -58,6 +59,9 @@ open class Matcher<Filling: GridFilling> {
         }
         if horizontalIndicies.count >= minSeries {
             result.formUnion(horizontalIndicies)
+        }
+        if !result.isEmpty {
+            result.insert(index)
         }
         return result
     }
