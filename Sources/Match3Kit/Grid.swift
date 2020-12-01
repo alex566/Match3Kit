@@ -134,10 +134,6 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
             self.id = id
             self.filling = filling
         }
-
-        public func match(with cell: Cell) -> Bool {
-            filling == cell.filling
-        }
     }
 
     internal init(size: Size, columns: [[Cell]]) {

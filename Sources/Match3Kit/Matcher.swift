@@ -44,7 +44,8 @@ open class Matcher<Filling: GridFilling> {
 
         func matchCellsInRow(sequence: UnfoldFirstSequence<Index>) -> [Index] {
             sequence.prefix {
-                grid.size.isOnBounds($0) && grid.cell(at: $0).match(with: cell)
+                grid.size.isOnBounds($0) && match(cell: grid.cell(at: $0),
+                                                  with: cell)
             }
         }
 
@@ -61,5 +62,9 @@ open class Matcher<Filling: GridFilling> {
             result.formUnion(horizontalIndicies)
         }
         return result
+    }
+
+    open func match(cell: Grid<Filling>.Cell, with cellToMatch: Grid<Filling>.Cell) -> Bool {
+        cell.filling == cellToMatch.filling
     }
 }
