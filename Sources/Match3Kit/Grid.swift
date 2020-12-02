@@ -143,6 +143,7 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
 
     public func allIndices() -> [Index] {
         var result = [Index]()
+        result.reserveCapacity(size.columns * size.rows)
         for column in columns.indices {
             for row in columns[column].indices {
                 result.append(Index(column: column, row: row))
@@ -156,7 +157,6 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
         allIndices().filter { cell(at: $0).filling == filling }
     }
 
-    // Public
     @inlinable
     public func cell(at index: Index) -> Cell {
         columns[index.column][index.row]
@@ -171,6 +171,7 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
     public mutating func remove(cells indicies: Set<Index>) -> Set<Index> {
         let cells = indicies.map(cell(at:))
         var removedIndices = Set<Index>()
+        removedIndices.reserveCapacity(indicies.count)
         for i in columns.indices {
             let start = columns[i].stablePartition { cells.contains($0) }
             let columnIndices = columns[i][start...].indices.map { Index(column: i, row: $0) }

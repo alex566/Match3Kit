@@ -50,15 +50,15 @@ open class Matcher<Filling: GridFilling> {
         }
 
         let verticalIndicies = matchCellsInRow(sequence: index.upperSequence()) +
-            matchCellsInRow(sequence: index.lowerSequence()) + [index]
+            matchCellsInRow(sequence: index.lowerSequence())
         let horizontalIndicies = matchCellsInRow(sequence: index.rightSequence()) +
-            matchCellsInRow(sequence: index.leftSequence()) + [index]
+            matchCellsInRow(sequence: index.leftSequence())
 
         var result = Set<Index>()
-        if verticalIndicies.count >= minSeries {
+        if verticalIndicies.count + 1 >= minSeries {
             result.formUnion(verticalIndicies)
         }
-        if horizontalIndicies.count >= minSeries {
+        if horizontalIndicies.count + 1 >= minSeries {
             result.formUnion(horizontalIndicies)
         }
         return result
