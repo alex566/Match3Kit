@@ -120,6 +120,12 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
         return basic.contains(cell.filling)
     }
 
+    @inlinable
+    public func isObstacle(at index: Index) -> Bool {
+        let cell = grid.cell(at: index)
+        return obstacles.contains(cell.filling)
+    }
+
     public func spawn(filling: Filling, at index: Index) -> Grid<Filling>.Cell {
         let cell = generator.generate(at: index, filling: filling)
         grid.setCell(cell, at: index)

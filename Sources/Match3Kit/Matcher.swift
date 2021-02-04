@@ -61,6 +61,9 @@ open class Matcher<Filling: GridFilling> {
         if horizontalIndicies.count + 1 >= minSeries {
             result.formUnion(horizontalIndicies)
         }
+        if !result.isEmpty {
+            result.insert(index)
+        }
         return result
     }
 
