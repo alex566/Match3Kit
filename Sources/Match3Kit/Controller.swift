@@ -184,7 +184,7 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
         matcher.findMatched(on: grid, indices: indices)
     }
 
-    public func swapAndMatchCell( at index: Index, with target: Index) -> Set<Index> {
+    public func swapAndMatchCell(at index: Index, with target: Index) -> Set<Index> {
         grid.swapCell(at: index, with: target)
         return matcher.findMatches(on: grid, at: index)
             .union(matcher.findMatches(on: grid, at: target))

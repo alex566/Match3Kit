@@ -21,16 +21,22 @@ struct Triangle: SwiftUI.Shape {
 }
 
 struct GridCellView: View {
-    let cell: Grid<Shape>.Cell
+    let cell: Match3Kit.Grid<Shape>.Cell
 
     var body: some View {
         switch cell.filling {
         case .square:
-            return AnyView(Rectangle().fill(Color.red).frame(width: 30.0, height: 30.0))
+            Rectangle()
+                .fill(Color.red)
+                .frame(width: 30.0, height: 30.0)
         case .circle:
-            return AnyView(Circle().fill(Color.green).frame(width: 30.0, height: 30.0))
+            Circle()
+                .fill(Color.green)
+                .frame(width: 30.0, height: 30.0)
         case .triangle:
-            return AnyView(Triangle().fill(Color.blue).frame(width: 30.0, height: 30.0))
+            Triangle()
+                .fill(Color.blue)
+                .frame(width: 30.0, height: 30.0)
         }
     }
 }

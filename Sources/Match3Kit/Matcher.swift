@@ -42,7 +42,7 @@ open class Matcher<Filling: GridFilling> {
             return Set()
         }
 
-        func matchCellsInRow(sequence: UnfoldFirstSequence<Index>) -> [Index] {
+        func matchCellsInRow(sequence: some Sequence<Index>) -> [Index] {
             sequence.prefix {
                 grid.size.isOnBounds($0) && match(cell: grid.cell(at: $0),
                                                   with: cell)

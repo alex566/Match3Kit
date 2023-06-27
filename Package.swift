@@ -1,8 +1,9 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.6
 import PackageDescription
 
 let package = Package(
     name: "Match3Kit",
+    platforms: [.iOS(.v13), .macOS(.v10_14), .tvOS(.v12)],
     products: [
         .library(name: "Match3Kit", targets: ["Match3Kit"])
     ],

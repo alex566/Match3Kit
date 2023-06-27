@@ -28,7 +28,7 @@ final class GridModel: ObservableObject {
                                             bonuse: [],
                                             obstacles: [])
 
-    var grid: Grid<Shape> {
+    var grid: Match3Kit.Grid<Shape> {
         controller.grid
     }
 

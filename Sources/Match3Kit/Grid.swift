@@ -8,6 +8,23 @@
 
 import Foundation
 
+/// `Size` represents the size of a two-dimensional grid in terms of columns and rows.
+///
+/// It provides useful properties and methods related to grid dimensions, including:
+/// - A method `isOnBounds(_:)` that checks if a given `Index` falls within the grid bounds.
+/// - Computed properties `lowerBound`, `upperBound`, `leftBound`, and `rightBound` which define the grid boundaries.
+///
+/// This struct conforms to `Hashable` and `Codable`, enabling instances to be compared, hashed, encoded, and decoded.
+///
+/// Example usage:
+/// ```
+/// var gridSize = Size(columns: 5, rows: 5)
+/// var index = Index(column: 2, row: 2)
+/// print(gridSize.isOnBounds(index)) // Prints: "true"
+/// ```
+///
+/// - Note: This struct considers `-1` as lower and left bounds, which implies it supports negative indexing.
+///         Make sure this aligns with your grid indexing requirements.
 public struct Size: Hashable, Codable {
     public let columns: Int
     public let rows: Int
@@ -36,6 +53,24 @@ public struct Size: Hashable, Codable {
     public var rightBound: Int { columns }
 }
 
+/// `Index` represents a location in a two-dimensional grid using `column` and `row` properties.
+///
+/// It provides methods and properties that facilitate grid navigation:
+/// - Computed properties for neighboring locations: `upper`, `lower`, `right`, `left`.
+/// - Computed properties for sequences of neighboring locations: `upperSequence`, `lowerSequence`, `rightSequence`, `leftSequence`.
+/// - A method `isNeighboring(with:)` that checks if a given index is neighboring the current index.
+/// - A static property `zero` which represents the origin (0,0) index.
+///
+/// Additionally, it provides arrays of immediate `neighbors` and diagonal `crossNeighbors`.
+///
+/// The struct also conforms to `Hashable`, `Codable`, and `CustomStringConvertible`.
+/// This allows for instances to be compared, hashed, encoded, decoded, and converted to a readable string format.
+///
+/// Example usage:
+/// ```
+/// var index = Index(column: 2, row: 2)
+/// print(index.upper) // Prints: "(2, 3)"
+/// ```
 public struct Index: Hashable, Codable, CustomStringConvertible {
     public let column: Int
     public let row: Int
@@ -46,7 +81,7 @@ public struct Index: Hashable, Codable, CustomStringConvertible {
     }
 
     @inlinable
-    public var zero: Index {
+    public static var zero: Index {
         Index(column: 0, row: 0)
     }
 
@@ -91,22 +126,22 @@ public struct Index: Hashable, Codable, CustomStringConvertible {
 
     // MARK: - Sequences
     @inlinable
-    public func upperSequence() -> UnfoldFirstSequence<Index> {
+    public func upperSequence() -> some Sequence<Index> {
         sequence(first: upper) { $0.upper }
     }
 
     @inlinable
-    public func lowerSequence() -> UnfoldFirstSequence<Index> {
+    public func lowerSequence() -> some Sequence<Index> {
         sequence(first: lower) { $0.lower }
     }
 
     @inlinable
-    public func rightSequence() -> UnfoldFirstSequence<Index> {
+    public func rightSequence() -> some Sequence<Index> {
         sequence(first: right) { $0.right }
     }
 
     @inlinable
-    public func leftSequence() -> UnfoldFirstSequence<Index> {
+    public func leftSequence() -> some Sequence<Index> {
         sequence(first: left) { $0.left }
     }
 
@@ -116,10 +151,53 @@ public struct Index: Hashable, Codable, CustomStringConvertible {
     }
 }
 
+/// `GridFilling` defines a protocol for items that can fill the cells of a `Grid`.
+///
+/// Conforming types must provide a `pattern` property, which could represent the visual pattern,
+/// value pattern or any other attributes that describe how this object fills a grid cell.
+///
+/// Example usage:
+/// ```
+/// struct MyFilling: PatternedGridFilling {
+///     var pattern: Pattern {
+///         // Define the pattern here
+///     }
+/// }
+///
+/// var myFilling = MyFilling()
+/// var grid = Grid<MyFilling>(size: Size(columns: 5, rows: 5), fill: myFilling)
+/// ```
 public protocol GridFilling: Hashable, Codable {
     var pattern: Pattern { get }
 }
 
+/// `Grid` represents the game field in a match-3 game, populated with items that conform to `GridFilling`.
+///
+/// Each cell in the `Grid` can hold a single `Cell` instance. A `Cell` holds an instance of `GridFilling`, which can represent a gem, bomb, or other game piece.
+///
+/// The `Grid` also provides methods for manipulating its contents, such as:
+/// - `setCell(_:at:)` for replacing the content of a cell.
+/// - `remove(cells:)` for removing multiple cells from the grid.
+/// - `swapCell(at:with:)` for swapping the contents of two cells.
+/// - `cell(at:)` for retrieving the content of a specific cell.
+///
+/// Other useful properties and methods include:
+/// - `size` for getting the size of the grid.
+/// - `allIndices()` and `allIndices(of:)` for retrieving all indices, or all indices containing a specific filling.
+///
+/// Example usage:
+/// ```
+/// typealias GridController = Controller<Shape, Generator<Shape>, Matcher<Shape>>
+/// private let controller = GridController(
+///     size: Size(columns: 6, rows: 6),
+///     basic: [.square, .circle, .triangle],
+///     bonuse: [],
+///     obstacles: []
+/// )
+///  controller.grid.setCell(.init(id: UUID(), filling: .square), at: .init(column: 0, row: 0))
+/// ```
+///
+/// The `Grid` structure is `Codable` which means it can be serialized and deserialized, allowing for the saving/loading of game states.
 public struct Grid<Filling>: Codable where Filling: GridFilling {
 
     public let size: Size

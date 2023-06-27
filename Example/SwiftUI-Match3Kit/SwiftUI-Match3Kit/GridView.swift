@@ -17,7 +17,7 @@ struct GridView: View {
 
     var body: some View {
         HStack {
-            ForEach(model.grid.columns.indices) { column in
+            ForEach(model.grid.columns.indices, id: \.self) { column in
                 VStack {
                     ForEach(self.model.grid.columns[column].indices.reversed(), id: \.self) { row in
                         self.buildCell(at: Index(column: column, row: row))
@@ -33,7 +33,6 @@ struct GridView: View {
 
         return GridCellView(cell: cell)
             .scaleEffect(isSelected ? 1.2 : 1.0)
-            .animation(.easeOut)
             .gesture(tapGesture(index: index, isSelected: isSelected))
     }
 
