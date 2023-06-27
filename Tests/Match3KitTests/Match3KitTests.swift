@@ -8,13 +8,3 @@ enum Toys: String, GridFilling, CaseIterable {
         Match3Kit.Pattern(indices: [])
     }
 }
-
-final class Match3KitTests: XCTestCase {
-    
-    func testExample() {
-    }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
-}

@@ -232,7 +232,7 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
 
     @inlinable
     public func allIndices(of filling: Filling) -> [Index] {
-        allIndices().filter { cell(at: $0).filling == filling }
+        allIndices().filter { self[$0].filling == filling }
     }
 
     @inlinable
@@ -242,6 +242,15 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
 
     // MARK: - Modification
 
+    public subscript(index: Index) -> Cell {
+        get {
+            columns[index.column][index.row]
+        }
+        set {
+            columns[index.column][index.row] = newValue
+        }
+    }
+    
     public mutating func setCell(_ cell: Cell, at index: Index) {
         columns[index.column][index.row] = cell
     }
