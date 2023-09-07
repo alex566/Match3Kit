@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "Match3Kit",
-    platforms: [.iOS(.v13), .macOS(.v10_14), .tvOS(.v12)],
+    platforms: [.iOS(.v13), .macOS(.v11), .tvOS(.v13)],
     products: [
         .library(name: "Match3Kit", targets: ["Match3Kit"])
     ],
