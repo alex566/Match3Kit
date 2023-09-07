@@ -25,11 +25,11 @@ public struct Pattern: Equatable, Hashable {
     }
 
     public func detectIn(indices: Set<Index>) -> Set<Index> {
-        let detected = detect(indices: self.indices, containedIn: indices)
+        let detected = Self.detect(indices: self.indices, containedIn: indices)
         if !detected.isEmpty {
             return detected
         }
-        let detectedRotated = detect(indices: rotated().indices, containedIn: indices)
+        let detectedRotated = Self.detect(indices: rotated().indices, containedIn: indices)
         if !detectedRotated.isEmpty {
             return detectedRotated
         }
@@ -37,10 +37,10 @@ public struct Pattern: Equatable, Hashable {
     }
 
     public func detectExactIn(indices: Set<Index>) -> Set<Index> {
-        detect(indices: self.indices, containedIn: indices)
+        Self.detect(indices: self.indices, containedIn: indices)
     }
 
-    private func detect(indices: Set<Index>, containedIn: Set<Index>) -> Set<Index> {
+    private static func detect(indices: Set<Index>, containedIn: Set<Index>) -> Set<Index> {
         guard !containedIn.isEmpty else {
             return Set()
         }

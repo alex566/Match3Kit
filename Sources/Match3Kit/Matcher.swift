@@ -68,22 +68,15 @@ open class Matcher<Filling: GridFilling> {
     }
 
     public func findMatches(on grid: Grid<Filling>, at index: Index) -> Set<Index> {
-        let cell = grid.cell(at: index)
+        let cell = grid[index]
         guard fillings.contains(cell.filling) else {
             return Set()
         }
 
-        func matchCellsInRow(sequence: some Sequence<Index>) -> [Index] {
-            sequence.prefix {
-                grid.size.isOnBounds($0) && match(cell: grid.cell(at: $0),
-                                                  with: cell)
-            }
-        }
-
-        let verticalIndicies = matchCellsInRow(sequence: index.upperSequence()) +
-            matchCellsInRow(sequence: index.lowerSequence())
-        let horizontalIndicies = matchCellsInRow(sequence: index.rightSequence()) +
-            matchCellsInRow(sequence: index.leftSequence())
+        let verticalIndicies = matchCellsInRow(on: grid, cell: cell, sequence: index.upperSequence()) +
+            matchCellsInRow(on: grid, cell: cell, sequence: index.lowerSequence())
+        let horizontalIndicies = matchCellsInRow(on: grid, cell: cell, sequence: index.rightSequence()) +
+            matchCellsInRow(on: grid, cell: cell, sequence: index.leftSequence())
 
         var result = Set<Index>()
         if verticalIndicies.count + 1 >= minSeries {
@@ -100,5 +93,15 @@ open class Matcher<Filling: GridFilling> {
 
     open func match(cell: Grid<Filling>.Cell, with cellToMatch: Grid<Filling>.Cell) -> Bool {
         cell.filling == cellToMatch.filling
+    }
+    
+    private func matchCellsInRow(
+        on grid: Grid<Filling>,
+        cell: Grid<Filling>.Cell,
+        sequence: some Sequence<Index>
+    ) -> [Index] {
+        sequence.prefix {
+            grid.size.isOnBounds($0) && match(cell: grid.cell(at: $0), with: cell)
+        }
     }
 }
