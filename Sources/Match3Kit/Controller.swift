@@ -11,7 +11,7 @@ public struct MatchResult<Filling: GridFilling> {
     public let spawned: [Index: Grid<Filling>.Cell]
 }
 
-public struct Pattern: Equatable, Hashable {
+public struct Pattern: Hashable {
     public let indices: Set<Index>
 
     public init(indices: Set<Index>) {

@@ -15,7 +15,7 @@ final class MatcherTests: XCTestCase {
         case x
         case y
         
-        var pattern: Pattern {
+        var pattern: Match3Kit.Pattern {
             .init(indices: [])
         }
     }
