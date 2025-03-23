@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
@@ -11,5 +11,5 @@ let package = Package(
         .target(name: "Match3Kit"),
         .testTarget(name: "Match3KitTests", dependencies: ["Match3Kit"])
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v6]
 )

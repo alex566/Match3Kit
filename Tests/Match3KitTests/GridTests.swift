@@ -28,18 +28,18 @@ final class SizeTests: XCTestCase {
     func testIsOnBounds() {
         let size = Size(columns: 5, rows: 10)
         // Testing within bounds
-        XCTAssertTrue(size.isOnBounds(Index(column: 0, row: 0)))
-        XCTAssertTrue(size.isOnBounds(Index(column: 4, row: 9)))
+        XCTAssertTrue(size.isInBounds(Index(column: 0, row: 0)))
+        XCTAssertTrue(size.isInBounds(Index(column: 4, row: 9)))
         // Testing at bounds
-        XCTAssertFalse(size.isOnBounds(Index(column: -1, row: 0)))
-        XCTAssertFalse(size.isOnBounds(Index(column: 5, row: 0)))
-        XCTAssertFalse(size.isOnBounds(Index(column: 0, row: -1)))
-        XCTAssertFalse(size.isOnBounds(Index(column: 0, row: 10)))
+        XCTAssertFalse(size.isInBounds(Index(column: -1, row: 0)))
+        XCTAssertFalse(size.isInBounds(Index(column: 5, row: 0)))
+        XCTAssertFalse(size.isInBounds(Index(column: 0, row: -1)))
+        XCTAssertFalse(size.isInBounds(Index(column: 0, row: 10)))
         // Testing out of bounds
-        XCTAssertFalse(size.isOnBounds(Index(column: -2, row: 0)))
-        XCTAssertFalse(size.isOnBounds(Index(column: 6, row: 0)))
-        XCTAssertFalse(size.isOnBounds(Index(column: 0, row: -2)))
-        XCTAssertFalse(size.isOnBounds(Index(column: 0, row: 11)))
+        XCTAssertFalse(size.isInBounds(Index(column: -2, row: 0)))
+        XCTAssertFalse(size.isInBounds(Index(column: 6, row: 0)))
+        XCTAssertFalse(size.isInBounds(Index(column: 0, row: -2)))
+        XCTAssertFalse(size.isInBounds(Index(column: 0, row: 11)))
     }
 }
 
@@ -67,7 +67,7 @@ final class IndexTests: XCTestCase {
 
     func testCrossNeighbors() {
         let index = Index(column: 5, row: 10)
-        XCTAssertEqual(index.crossNeighbors, [
+        XCTAssertEqual(index.diagonalNeighbors, [
             Index(column: 4, row: 9),
             Index(column: 6, row: 11),
             Index(column: 4, row: 11),

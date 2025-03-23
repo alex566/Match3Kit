@@ -49,8 +49,10 @@ public struct Pattern: Hashable {
 
         for i in columns {
             for j in rows {
-                let figureIndices = indices.lazy.map { Index(column: $0.column + i,
-                                                             row: $0.row + j) }
+                let figureIndices = indices.map {
+                    Index(column: $0.column + i,
+                          row: $0.row + j)
+                }
                 if containedIn.isSuperset(of: figureIndices) {
                     return Set(figureIndices)
                 }
@@ -213,7 +215,7 @@ public final class Controller<Filling: GridFilling, GeneratorType: Generator<Fil
     public func findPossibleSwap() -> (Index, Index)? {
         for index in grid.allIndices() {
             for neighbour in index.neighbors
-                where grid.size.isOnBounds(neighbour) && hasMatchesExcanging(index, and: neighbour) {
+                where grid.size.isInBounds(neighbour) && hasMatchesExcanging(index, and: neighbour) {
                     return (index, neighbour)
             }
         }

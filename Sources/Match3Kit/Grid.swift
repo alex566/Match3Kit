@@ -34,8 +34,12 @@ public struct Size: Hashable, Codable {
         self.rows = rows
     }
 
+    /// Checks if an index is within the bounds of the grid.
+    ///
+    /// - Parameter index: The index to check.
+    /// - Returns: `true` if the index is within the bounds of the grid, `false` otherwise.
     @inlinable
-    public func isOnBounds(_ index: Index) -> Bool {
+    public func isInBounds(_ index: Index) -> Bool {
         index.column > leftBound && index.column < rightBound &&
             index.row > lowerBound && index.row < upperBound
     }
@@ -106,13 +110,35 @@ public struct Index: Hashable, Codable, CustomStringConvertible {
         Index(column: column - 1, row: row)
     }
 
+    /// Returns an array of immediate neighbors of the current index.
+    ///
+    /// The neighbors are the indices immediately adjacent to the current index,
+    /// including the upper, lower, right, and left neighbors.
+    ///
+    /// Example usage:
+    /// ```
+    /// let index = Index(column: 2, row: 2)
+    /// let neighbors = index.neighbors
+    /// print(neighbors) // Prints: "[Index(column: 1, row: 2), Index(column: 3, row: 2), Index(column: 2, row: 1), Index(column: 2, row: 3)]"
+    /// ```
     @inlinable
     public var neighbors: [Index] {
         [left, upper, right, lower]
     }
 
+    /// Returns an array of diagonal neighbors of the current index.
+    ///
+    /// The diagonal neighbors are the indices diagonally adjacent to the current index,
+    /// including the upper-left, upper-right, lower-left, and lower-right neighbors.
+    ///
+    /// Example usage:
+    /// ```
+    /// let index = Index(column: 2, row: 2)
+    /// let diagonalNeighbors = index.diagonalNeighbors
+    /// print(diagonalNeighbors) // Prints: "[Index(column: 1, row: 1), Index(column: 3, row: 3), Index(column: 1, row: 3), Index(column: 3, row: 1)]"
+    /// ```
     @inlinable
-    public var crossNeighbors: [Index] {
+    public var diagonalNeighbors: [Index] {
         [Index(column: column - 1, row: row - 1),
          Index(column: column + 1, row: row + 1),
          Index(column: column - 1, row: row + 1),
@@ -255,10 +281,10 @@ public struct Grid<Filling>: Codable where Filling: GridFilling {
         columns[index.column][index.row] = cell
     }
 
-    public mutating func remove(cells indicies: Set<Index>) -> Set<Index> {
-        let cells = indicies.map(cell(at:))
+    public mutating func remove(cells indices: Set<Index>) -> Set<Index> {
+        let cells = indices.map(cell(at:))
         var removedIndices = Set<Index>()
-        removedIndices.reserveCapacity(indicies.count)
+        removedIndices.reserveCapacity(indices.count)
         for i in columns.indices {
             let start = columns[i].stablePartition { cells.contains($0) }
             let columnIndices = columns[i][start...].indices.map { Index(column: i, row: $0) }

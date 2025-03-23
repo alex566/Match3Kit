@@ -101,7 +101,7 @@ open class Matcher<Filling: GridFilling> {
         sequence: some Sequence<Index>
     ) -> [Index] {
         sequence.prefix {
-            grid.size.isOnBounds($0) && match(cell: grid.cell(at: $0), with: cell)
+            grid.size.isInBounds($0) && match(cell: grid.cell(at: $0), with: cell)
         }
     }
 }
