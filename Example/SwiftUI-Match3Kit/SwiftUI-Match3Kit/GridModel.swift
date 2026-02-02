@@ -48,10 +48,9 @@ final class GridModel: ObservableObject {
         objectWillChange.send()
         
         _ = controller.match(indices: indices, swapIndices: swapIndices, refill: .spill)
-
-        let matches = controller.findAllMatches()
-        if !matches.isEmpty {
-            self.remove(indices: matches)
-        }
+    }
+    
+    func findAllMatches() -> Set<Index> {
+        controller.findAllMatches()
     }
 }
